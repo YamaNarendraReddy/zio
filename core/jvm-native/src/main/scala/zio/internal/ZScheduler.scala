@@ -63,8 +63,8 @@ private final class ZScheduler(autoBlocking: Boolean) extends Executor { parent 
     Thread.currentThread().isInstanceOf[ZScheduler.Worker]
 
   /**
-   * Performs Power of Two Choices (P2C) to select the least-loaded worker.
-   * This is a wait-free O(1) operation that avoids global queue contention.
+   * Performs Power of Two Choices (P2C) to select the least-loaded worker. This
+   * is a wait-free O(1) operation that avoids global queue contention.
    */
   private[this] def chooseLeastLoadedWorker(): ZScheduler.Worker = {
     val rnd = ThreadLocalRandom.current()
@@ -591,7 +591,7 @@ private object ZScheduler {
     /**
      * The local work queue for this worker.
      */
-    val localQueue: RingBufferPow2[Runnable] =
+    private[zio] val localQueue: RingBufferPow2[Runnable] =
       RingBufferPow2[Runnable](256)
 
     /**
